@@ -1,0 +1,42 @@
+{
+  "name": "ethertechbackend",
+  "version": "1.0.0",
+  "description": "The Backend for ethertech company website for mailing and managing marketers",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/philzace1/ethertechbackend.git"
+  },
+  "keywords": [
+    "Mailing",
+    "Authentication",
+    "Ethertech",
+    "Node",
+    "Mongo",
+    "express"
+  ],
+  "author": "Akuagwu Philemon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/philzace1/ethertechbackend/issues"
+  },
+  "homepage": "https://github.com/philzace1/ethertechbackend#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "helmet": "^4.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.27"
+  },
+  "devDependencies": {
+    "nodemon": "*"
+  }
+}
