@@ -1,8 +1,20 @@
 const router = require('express').Router();
 const Marketer = require('../models/Marketer');
 
-router.get('/', (req, res) => {
-  res.send('working');
+router.get('/', async (req, res) => {
+  try {
+    const marketers = await Marketer.find();
+    res.status(200).json({
+      success: true,
+      payload: marketers,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({
+      success: false,
+      message: e,
+    });
+  }
 });
 
 router.post('/signup', async (req, res) => {
@@ -31,32 +43,46 @@ router.post('/signup', async (req, res) => {
     });
   } catch (e) {
     console.log(e);
+    res.status(400).json({
+      success: false,
+      message: e,
+    });
   }
 });
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
-  const user = await Marketer.findOne({
-    $or: [{ email }, { username: email }],
-  });
-  if (!user)
-    return res.status(404).json({
-      success: false,
-      msg: 'user does not exits',
+  try {
+    const { email, password } = req.body;
+    const user = await Marketer.findOne({
+      $or: [{ email }, { username: email }],
     });
-  // confirm password
-  const validPassword = await bcrypt.compare(password, user.password);
-  if (!validPassword)
-    return res.status(400).json({ success: false, payload: 'wrong password' });
+    if (!user)
+      return res.status(404).json({
+        success: false,
+        msg: 'user does not exits',
+      });
+    // confirm password
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword)
+      return res
+        .status(400)
+        .json({ success: false, payload: 'wrong password' });
 
-  const token = user.generateAuthToken();
-  // send token
-  res.header('x-auth-token', token).status(200).json({
-    success: true,
-    payload: {
-      token,
-      user,
-    },
-  });
+    const token = user.generateAuthToken();
+    // send token
+    res.header('x-auth-token', token).status(200).json({
+      success: true,
+      payload: {
+        token,
+        user,
+      },
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({
+      success: false,
+      message: e,
+    });
+  }
 });
 
 module.exports = router;

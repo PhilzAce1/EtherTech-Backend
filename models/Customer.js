@@ -10,8 +10,13 @@ const customerSchema = mongoose.Schema({
   },
   verified: {
     type: Boolean,
+    default: false,
   },
   status: {
+    type: Number,
+    default: 0,
+  },
+  paid: {
     type: Number,
     default: 0,
   },
