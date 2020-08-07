@@ -1,3 +1,4 @@
+console.clear();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -5,7 +6,11 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 
 // apply middlewares
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 app.use(bodyParser.json());
 app.use(helmet());
 app.use(require('compression')());
@@ -20,6 +25,9 @@ mongoose
   .then(() => console.log('Database connected'))
   .catch(console.error);
 
+app.get('/', (req, res) => {
+  res.send('I am working well');
+});
 // apply routes
 app.use('/api/customer', require('./routes/customer'));
 app.use('/api/marketer', require('./routes/marketer'));

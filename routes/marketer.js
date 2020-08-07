@@ -1,5 +1,8 @@
 const router = require('express').Router();
 const Marketer = require('../models/Marketer');
+const bcrypt = require('bcrypt');
+const { Mongoose } = require('mongoose');
+const Customer = require('../models/Customer');
 
 router.get('/', async (req, res) => {
   try {
@@ -17,11 +20,32 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/:username', async (req, res) => {
+  const { username } = req.params;
+  try {
+    const user = await Marketer.findOne({
+      username: username,
+    });
+    const customers = await Customer.find({ referrer: user._id }).populate(
+      'referrer'
+    );
+    res.json({
+      success: true,
+      customers,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(400).json({
+      success: false,
+      msg: e,
+    });
+  }
+});
 router.post('/signup', async (req, res) => {
   try {
     const { email, username, password } = req.body;
     // check if user exist
-    const userExist = await marketer.findOne({
+    const userExist = await Marketer.findOne({
       $or: [{ email }, { username }],
     });
     if (userExist)

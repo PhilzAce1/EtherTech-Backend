@@ -23,7 +23,7 @@ const marketerSchema = mongoose.Schema({
     minlength: 5,
     maxlength: 1024,
   },
-  customers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Customer' }],
+  customers: { type: mongoose.Schema.Types.ObjectId, ref: 'Customer' },
   bal: {
     type: Number,
     default: 0,
@@ -48,7 +48,7 @@ marketerSchema.pre('save', function (next) {
 marketerSchema.methods.generateAuthToken = function () {
   const token = jwt.sign(
     { _id: this._id, role: this.role },
-    config.get('jwtPrivateKey')
+    'philzacethebadguy'
   );
 
   return token;

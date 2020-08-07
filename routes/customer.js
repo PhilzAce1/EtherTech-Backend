@@ -18,10 +18,16 @@ router.get('/', async (req, res) => {
     });
   }
 });
+router.get('/:userId', async (req, res) => {
+  const { userId } = req.params;
+  const cus = await Customer.findById(userId).populate('referrer');
+  console.log(cus);
+  res.json(cus);
+});
 router.post('/newcustomer', async (req, res) => {
   try {
     const { name, refId, conf } = req.body;
-    const referrer = await Marketer.findOne({ username: name });
+    const referrer = await Marketer.findOne({ username: refId });
     if (!referrer && !conf)
       return res.status(404).json({
         success: false,
