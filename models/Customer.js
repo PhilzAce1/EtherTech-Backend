@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const customerSchema = mongoose.Schema({
+  name: {
+    type: String,
+  },
   referrer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Marketer',
