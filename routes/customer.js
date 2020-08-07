@@ -55,5 +55,50 @@ router.post('/newcustomer', async (req, res) => {
   }
 });
 
-router.post('/update', (req, res) => {});
+router.post('/updateverified', async (req, res) => {
+  try {
+    const { id, verified } = req.body;
+    const cus = await Customer.findByIdAndUpdate(id, { verified });
+    res.status(200).json({
+      success: true,
+      payload: cus,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: error,
+    });
+  }
+});
+router.post('/updatestatus', async (req, res) => {
+  const { id, status } = req.body;
+  try {
+    const cus = await Customer.findByIdAndUpdate(id, { status });
+    res.status(200).json({
+      success: true,
+      payload: cus,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      success: false,
+      message: error,
+    });
+  }
+});
+router.post('/updatepaid', async (req, res) => {
+  const { id, paid } = req.body;
+  try {
+    const cus = Customer.findByIdAndUpdate(id, {
+      paid,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error,
+    });
+  }
+});
+
 module.exports = router;
