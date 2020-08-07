@@ -17,13 +17,16 @@ app.use(require('compression')());
 
 // connect database
 mongoose
-  .connect('mongodb://localhost/Fblog', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
+  .connect(
+    'mongodb+srv://philzace:philzace1@cluster0-ojdiw.mongodb.net/Ethertech?retryWrites=true&w=majority',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    }
+  )
   .then(() => console.log('Database connected'))
-  .catch(console.error);
+  .catch((e) => console.error(e));
 
 app.get('/', (req, res) => {
   res.send('I am working well');
