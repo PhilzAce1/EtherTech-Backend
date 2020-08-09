@@ -4,17 +4,14 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const cors = require('cors');
 
 // apply middlewares
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
+app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(require('compression')());
-
 // connect database
 mongoose
   .connect(
@@ -28,8 +25,10 @@ mongoose
   .then(() => console.log('Database connected'))
   .catch((e) => console.error(e));
 
+// app.use(bodyParser.json());
+
 app.get('/', (req, res) => {
-  res.send('I am working well');
+  res.json({ meg: 'I am working well' });
 });
 // apply routes
 app.use('/api/customer', require('./routes/customer'));

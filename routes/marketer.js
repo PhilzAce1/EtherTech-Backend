@@ -42,6 +42,7 @@ router.get('/:username', async (req, res) => {
   }
 });
 router.post('/signup', async (req, res) => {
+  console.log(req.body);
   try {
     const { email, username, password } = req.body;
     // check if user exist
@@ -66,7 +67,7 @@ router.post('/signup', async (req, res) => {
       payload: { token, newUser },
     });
   } catch (e) {
-    console.log(e);
+    // console.log(e);
     res.status(400).json({
       success: false,
       message: e,
