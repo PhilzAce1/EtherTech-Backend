@@ -31,6 +31,7 @@ router.get('/:username', async (req, res) => {
     );
     res.json({
       success: true,
+      user,
       customers,
     });
   } catch (e) {
@@ -42,7 +43,6 @@ router.get('/:username', async (req, res) => {
   }
 });
 router.post('/signup', async (req, res) => {
-  console.log(req.body);
   try {
     const { email, username, password } = req.body;
     // check if user exist
@@ -79,6 +79,8 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await Marketer.findOne({
       $or: [{ email }, { username: email }],
+    }).select({
+      password: '0',
     });
     if (!user)
       return res.status(404).json({
