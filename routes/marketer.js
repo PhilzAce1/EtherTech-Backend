@@ -79,8 +79,6 @@ router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     const user = await Marketer.findOne({
       $or: [{ email }, { username: email }],
-    }).select({
-      password: '0',
     });
     if (!user)
       return res.status(404).json({
